@@ -28,6 +28,9 @@ There are problems still associated with browser DOM manipulation (invariant vio
 I'm looking into these resources to solve these: 
  - https://facebook.github.io/react/docs/working-with-the-browser.html
  - https://facebook.github.io/react/docs/more-about-refs.html
+ - https://github.com/ryanflorence/react-training/blob/gh-pages/code/Dialog/Dialog.js
+ - https://gist.github.com/petehunt/7882164
+ - http://facebook.github.io/react/tips/use-react-with-other-libraries.html
 
 
 ###Warning
