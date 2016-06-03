@@ -57,6 +57,8 @@ with `require('react-jquery-datatables/css/datatables.min.css')`.
 
 ### Using the default implementation
 
+Forked from (React Data Components)[https://github.com/carlosrocha/react-data-components]
+
 The default implementation includes a filter for case insensitive global search,
 pagination and page size.
 
