@@ -1,8 +1,11 @@
-Jquery DataTables (DataTables.net) with React
+### Jquery DataTables (DataTables.net) with React
 
 *** Work in progress PRs encouraged ***
+[proof of concept](https://github.com/alecperkey/react-hot-boilerplate/blob/master/README.md)
 
-proof of concept using webpack and simple hard coded data: https://github.com/alecperkey/react-hot-boilerplate/blob/master/README.md
+>>>Most of the time you should stay within React's "faked browser" world since it's more performant and easier to reason about. However, sometimes you simply need to access the underlying API, perhaps to work with a third-party library like a jQuery plugin. React provides escape hatches for you to use the underlying DOM API directly.
+
+>>>(ref: https://facebook.github.io/react/docs/working-with-the-browser.html)
 
 ### How it works: the React Lifecyle approach for jQuery DataTables
 
