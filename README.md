@@ -1,21 +1,17 @@
-# react-data-components
+# react-jquery-datatables
 
-[![Build Status](https://travis-ci.org/carlosrocha/react-data-components.svg?branch=master)](https://travis-ci.org/carlosrocha/react-data-components)
-
-DataTable: [Live demo and source](https://jsbin.com/ziyawu/9/edit?js,output)
-
-SelectableTable: [Live demo and source](https://jsbin.com/yokara/edit?js,output)
+[![Build Status](https://travis-ci.org/carlosrocha/react-jquery-datatables.svg?branch=master)](https://travis-ci.org/alecperkey/react-jquery-datatables)
 
 ## Getting started
 
 ```sh
-npm install react-data-components --save
+npm install react-jquery-datatables --save
 ```
 
-This component requires Bootstrap stylesheet and Font Awesome fonts, in addition
-to the [stylesheet for headers](css/table-twbs.css). If you are using Webpack
-and the `css-loader` you can also require the css
-with `require('react-data-components/css/table-twbs.css')`.
+Styles (tbd)
+
+If you are using Webpack and the `css-loader` you can also require the css
+with `require('react-jquery-datatables/css/datatables.min.css')`.
 
 ### Using the default implementation
 
@@ -23,21 +19,39 @@ The default implementation includes a filter for case insensitive global search,
 pagination and page size.
 
 ```javascript
-var React = require('react');
-var DataTable = require('react-data-components').DataTable;
+import React, {Component, PropTypes} from 'react';
+import { DataTable } from 'react-jquery-datatables';
 
-var columns = [
-  { title: 'Name', prop: 'name'  },
-  { title: 'City', prop: 'city' },
-  { title: 'Address', prop: 'address' },
-  { title: 'Phone', prop: 'phone' }
-];
+export default class MyTable extends Component {
 
-var data = [
-  { name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }
-  // It also supports arrays
-  // [ 'name value', 'city value', 'address value', 'phone value' ]
-];
+  static propTypes = {
+    accountSummaries: PropTypes.object,
+    pushState: PropTypes.func.isRequired,
+    del: PropTypes.func.isRequired,
+    loadData: PropTypes.func.isRequired
+  };
+  
+  componentWillMount() {
+  
+    const data = this.props.loadData();
+    
+    /** get some initial config data like
+    {
+        columns: [
+          { title: 'Name', prop: 'name'  },
+          { title: 'City', prop: 'city' },
+          { title: 'Address', prop: 'address' },
+          { title: 'Phone', prop: 'phone' }
+        ],
+        data = [
+          { name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }
+          // It also supports arrays
+          // [ 'name value', 'city value', 'address value', 'phone value' ]
+        ];
+    }
+    **/
+  }
+
 
 React.render((
     <DataTable
@@ -47,7 +61,6 @@ React.render((
       initialData={data}
       initialPageLength={5}
       initialSortBy={{ prop: 'city', order: 'descending' }}
-      pageLengthOptions={[ 5, 20, 50 ]}
     />
   ), document.body);
 ```

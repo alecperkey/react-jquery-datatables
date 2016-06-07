@@ -20,6 +20,7 @@ function buildInitialState(props) {
 module.exports = {
 
   getInitialState() {
+    console.log('DataMixin getInitialState', this);
     return buildInitialState(this.props);
   },
 
@@ -36,15 +37,21 @@ module.exports = {
   },
 
   componentWillReceiveProps(nextProps) {
+    console.log('DataMixin componentWillReceiveProps', this);
     this.setState(buildInitialState(nextProps));
   },
 
   componentWillMount() {
+    console.log('DataMixin componentWillMount', this);
     // Do the initial sorting if specified.
     var {sortBy, data} = this.state;
     if (sortBy) {
       this.setState({ data: sort(sortBy, data) });
     }
+  },
+
+  componentWillUnmount() {
+    console.log('DataMixin componentWillUnmount', this);
   },
 
   onSort(sortBy) {

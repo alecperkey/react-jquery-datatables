@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-// import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 const $ = require('jquery');
 const dt = require('datatables.net-bs');
 const buttons = require('datatables.net-buttons-bs');
@@ -29,35 +29,20 @@ let getCellClass =
       typeof className == 'function' ? className(row[prop], row) :
       className;
 
-// function buildSortProps(col, sortBy, onSort) {
-//   let order = sortBy.prop === col.prop ? sortBy.order : 'none';
-//   let nextOrder = order === 'ascending' ? 'descending' : 'ascending';
-//   let sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
-//
-//   return {
-//     'onClick': sortEvent,
-//     // Fire the sort event on enter.
-//     'onKeyDown': e => { if (e.keyCode === 13) sortEvent(); },
-//     // Prevents selection with mouse.
-//     'onMouseDown': e => e.preventDefault(),
-//     'tabIndex': 0,
-//     'aria-sort': order,
-//     'aria-label': `${col.title}: activate to sort column ${nextOrder}`,
-//   };
-// }
-
 export default class Table extends Component {
 
   constructor(props) {
     super(props);
+    console.log('Table constructor', this);
     this._headers = [];
+
+    //  bind event handlers in the constructor so they are only bound once for every instance
   }
 
   static defaultProps = {
     buildRowOptions: () => ({}),
     sortBy: {},
   };
-
   static propTypes = {
     keys: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
@@ -101,49 +86,80 @@ export default class Table extends Component {
     onSort: PropTypes.func,
   };
 
-  // componentDidMount() {
-    // If no width was specified, then set the width that the browser applied
-    // initially to avoid recalculating width between pages.
-    // this._headers.forEach(header => {
-    //   let thDom = ReactDOM.findDOMNode(header);
-    //   if (!thDom.style.width) {
-    //     thDom.style.width = `${thDom.offsetWidth}px`;
-    //   }
-    // });
-  // }
   componentDidMount() {
-    console.log('componentDidMount');
+    console.log('Table componentDidMount', this);
+    let { columns, dataArray, className } = this.props;
     let self = this;
 
-    let table = $('#dt');
-    console.log('table', table);
+    let dtContainer = $(this.refs.dtContainer);
+    console.log('dtContainer', dtContainer);
 
-    table.DataTable({ // eslint-disable-line new-cap
+    let table = this.getDTMarkup();
+    console.log(ReactDOM.render(table));
+
+    // let jqueryTable = $(table);
+    let tableString = '<table class="';
+    tableString += className;
+    tableString += '"><thead><tr>';
+    columns.forEach(function addHeader(col) {
+      tableString += ('<th>' + col.title + '</th>');
+    });
+    tableString += '</tr></thead><tbody></tbody></table>';
+
+
+    let jqueryTable = $(tableString);
+    console.log('jqueryTable', jqueryTable);
+
+
+    dtContainer.append(jqueryTable);
+
+    // console.log('dtContainer', dtContainer);
+
+    let initColumns = columns.map((col, idx) => {
+      let rCol = {};
+      rCol['data'] = col.prop;
+      return rCol;
+    });
+
+    console.log('dataArray', dataArray);
+    console.log('initColumns', initColumns);
+
+
+    jqueryTable.DataTable({ // eslint-disable-line new-cap
+      "data": dataArray,
+      "columns": initColumns,
       dom: '<"html5buttons"B>lTfgitp',
       buttons: [
         'copy', 'csv', 'excel', 'pdf', 'print'
       ],
-      'pagingType': 'numbers',
-      'bAutoWidth': false,
-      'bDestroy': true,
-      'fnDrawCallback': function() {
-        self.forceUpdate();
+      "pagingType": 'numbers',
+      "bAutoWidth": false,
+      "bDestroy": true,
+      "fnDrawCallback": function() {
+        console.log('datatables fnDrawCallback');
+        // self.forceUpdate();
       }
     });
+
   }
 
-  render() {
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('Table shouldComponentUpdate', this);
+    console.log('nextProps', nextProps);
+    console.log('nextState', nextState);
+    return false;
+  }
+
+  componentWillUnmount() {
+    console.log('Table componentWillUnmount', this);
+  }
+
+  getDTMarkup() {
+    console.log('Table getDTMarkup', this);
+
     let { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
 
     let headers = columns.map((col, idx) => {
-      // let sortProps, order;
-      // Only add sorting events if the column has a property and is sortable.
-      // if (typeof onSort == 'function' &&
-      //     col.sortable !== false &&
-      //     'prop' in col) {
-      //   sortProps = buildSortProps(col, sortBy, onSort);
-      //   order = sortProps['aria-sort'];
-      // }
 
       return (
         <th
@@ -153,9 +169,6 @@ export default class Table extends Component {
           role="columnheader"
           scope="col" >
           <span>{col.title}</span>
-          {/*typeof order != 'undefined' ?
-            <span className={`sort-icon sort-${order}`} aria-hidden="true" /> :
-            null*/}
         </th>
       );
     });
@@ -175,9 +188,6 @@ export default class Table extends Component {
 
     return (
       <table id="dt" {...this.props}>
-        {/*<caption className="sr-only" role="alert" aria-live="polite">
-          {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
-        </caption>*/}
         <thead>
           <tr>
             {headers}
@@ -190,6 +200,15 @@ export default class Table extends Component {
             </tr>}
         </tbody>
       </table>
+    );
+  }
+
+  render() {
+    console.log('Table render', this);
+    return (
+      <div>
+        <div ref="dtContainer"></div>
+      </div>
     );
   }
 

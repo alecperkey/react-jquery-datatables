@@ -1,6 +1,6 @@
 {
-  "name": "@alecperkey/react-jquery-datatables",
-  "version": "0.6.0",
+  "name": "react-jquery-datatables",
+  "version": "0.6.15",
   "description": "React, DataTables.net (aka jQuery DataTables), fork of https://github.com/carlosrocha/react-data-components",
   "keywords": [
     "datatables.net",
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alecperkey/react-jquery-datatables"
+    "url": "git+https://github.com/alecperkey/react-jquery-datatables.git"
   },
   "babel": {
     "stage": 0
@@ -72,5 +72,9 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/alecperkey/react-jquery-datatables/issues"
+  },
+  "homepage": "https://github.com/alecperkey/react-jquery-datatables#readme"
 }

@@ -5,3 +5,4 @@ lib
 coverage
 npm-debug.log
 .idea*
+/react-boilerplate/
