@@ -36,7 +36,6 @@ export default class Table extends Component {
     super(props);
     console.log('Table constructor', this);
     this._headers = [];
-
     //  bind event handlers in the constructor so they are only bound once for every instance
   }
 
@@ -89,48 +88,15 @@ export default class Table extends Component {
 
   componentDidMount() {
     console.log('Table componentDidMount', this);
-    let { columns, dataArray, className } = this.props;
-    let self = this;
 
     let table = this.getDTMarkup();
-    console.log('ReactDOM', ReactDOM);
     let dtContainer = this.refs.dtContainer;
     let renderedTable = ReactDOMServer.renderToStaticMarkup(table, dtContainer);
-    console.log('dtContainer', dtContainer);
-
-
-    console.log('renderedTable', renderedTable);
-
-    // let jqueryTable = $(table);
-    // let tableString = '<table class="';
-    // tableString += className;
-    // tableString += '"><thead><tr>';
-    // columns.forEach(function addHeader(col) {
-    //   tableString += ('<th>' + col.title + '</th>');
-    // });
-    // tableString += '</tr></thead><tbody></tbody></table>';
-
-    // let jqueryTable = $(tableString);
-
-
+    
     $('#dtContainer').append(renderedTable);
+    
     let jqueryTable = $('#dt');
-    console.log('jqueryTable', jqueryTable);
-
-    // console.log('dtContainer', dtContainer);
-
-    // let initColumns = columns.map((col, idx) => {
-    //   let rCol = {};
-    //   rCol['data'] = col.prop;
-    //   return rCol;
-    // });
-    //
-    // console.log('dataArray', dataArray);
-    // console.log('initColumns', initColumns);
-
     jqueryTable.DataTable({ // eslint-disable-line new-cap
-      // "data": dataArray,
-      // "columns": initColumns,
       dom: '<"html5buttons"B>lTfgitp',
       buttons: [
         'copy', 'csv', 'excel', 'pdf', 'print'
@@ -140,18 +106,15 @@ export default class Table extends Component {
       "bDestroy": true,
       "fnDrawCallback": function() {
         console.log('datatables fnDrawCallback');
-        // self.forceUpdate();
       }
     });
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log('Table shouldComponentUpdate', this);
     console.log('nextProps', nextProps);
     console.log('nextState', nextState);
-
-    // check if dataArray changes, if so implement componentDidMount code in componentWillUpdate
+    // TODO check if dataArray changes, if so implement componentDidMount code in componentWillUpdate
     return false;
   }
 
@@ -163,7 +126,6 @@ export default class Table extends Component {
     console.log('Table getDTMarkup', this);
 
     let { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
-
     let headers = columns.map((col, idx) => {
 
       return (
