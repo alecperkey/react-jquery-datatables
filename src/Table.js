@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 const $ = require('jquery');
 const dt = require('datatables.net-bs');
 const buttons = require('datatables.net-buttons-bs');
@@ -91,43 +92,45 @@ export default class Table extends Component {
     let { columns, dataArray, className } = this.props;
     let self = this;
 
-    let dtContainer = $(this.refs.dtContainer);
+    let table = this.getDTMarkup();
+    console.log('ReactDOM', ReactDOM);
+    let dtContainer = this.refs.dtContainer;
+    let renderedTable = ReactDOMServer.renderToStaticMarkup(table, dtContainer);
     console.log('dtContainer', dtContainer);
 
-    let table = this.getDTMarkup();
-    console.log(ReactDOM.render(table));
+
+    console.log('renderedTable', renderedTable);
 
     // let jqueryTable = $(table);
-    let tableString = '<table class="';
-    tableString += className;
-    tableString += '"><thead><tr>';
-    columns.forEach(function addHeader(col) {
-      tableString += ('<th>' + col.title + '</th>');
-    });
-    tableString += '</tr></thead><tbody></tbody></table>';
+    // let tableString = '<table class="';
+    // tableString += className;
+    // tableString += '"><thead><tr>';
+    // columns.forEach(function addHeader(col) {
+    //   tableString += ('<th>' + col.title + '</th>');
+    // });
+    // tableString += '</tr></thead><tbody></tbody></table>';
+
+    // let jqueryTable = $(tableString);
 
 
-    let jqueryTable = $(tableString);
+    $('#dtContainer').append(renderedTable);
+    let jqueryTable = $('#dt');
     console.log('jqueryTable', jqueryTable);
-
-
-    dtContainer.append(jqueryTable);
 
     // console.log('dtContainer', dtContainer);
 
-    let initColumns = columns.map((col, idx) => {
-      let rCol = {};
-      rCol['data'] = col.prop;
-      return rCol;
-    });
-
-    console.log('dataArray', dataArray);
-    console.log('initColumns', initColumns);
-
+    // let initColumns = columns.map((col, idx) => {
+    //   let rCol = {};
+    //   rCol['data'] = col.prop;
+    //   return rCol;
+    // });
+    //
+    // console.log('dataArray', dataArray);
+    // console.log('initColumns', initColumns);
 
     jqueryTable.DataTable({ // eslint-disable-line new-cap
-      "data": dataArray,
-      "columns": initColumns,
+      // "data": dataArray,
+      // "columns": initColumns,
       dom: '<"html5buttons"B>lTfgitp',
       buttons: [
         'copy', 'csv', 'excel', 'pdf', 'print'
@@ -147,6 +150,8 @@ export default class Table extends Component {
     console.log('Table shouldComponentUpdate', this);
     console.log('nextProps', nextProps);
     console.log('nextState', nextState);
+
+    // check if dataArray changes, if so implement componentDidMount code in componentWillUpdate
     return false;
   }
 
@@ -207,7 +212,7 @@ export default class Table extends Component {
     console.log('Table render', this);
     return (
       <div>
-        <div ref="dtContainer"></div>
+        <div ref="dtContainer" id="dtContainer"></div>
       </div>
     );
   }
