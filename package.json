@@ -1,6 +1,6 @@
 {
   "name": "react-jquery-datatables",
-  "version": "0.8.2",
+  "version": "0.8.8",
   "description": "React, DataTables.net (aka jQuery DataTables), fork of https://github.com/carlosrocha/react-data-components",
   "keywords": [
     "datatables.net",
@@ -16,6 +16,7 @@
     "CHANGELOG.md",
     "LICENSE",
     "css",
+    "dist",
     "lib",
     "src"
   ],
@@ -46,6 +47,7 @@
     "lodash": "~4.17.4",
     "lodash.some": "^3.2.3",
     "lodash.sortby": "^3.1.5",
+    "prop-types": "^15.6.0",
     "react": "^0.14.1",
     "react-dom": "^0.14.1",
     "react-redux": "~4.4.5",

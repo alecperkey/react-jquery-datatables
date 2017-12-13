@@ -1,8 +1,8 @@
 module.exports = {
   entry: './src/index',
   output: {
-    filename: 'dist/react-jquery-datatables-components.min.js',
-    library: 'ReactDataComponents',
+    filename: 'dist/react-jquery-datatables.min.js',
+    library: 'ReactJqueryDatatables',
     libraryTarget: 'umd',
   },
   externals: {
@@ -16,6 +16,10 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader' },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+      },
     ],
   },
 };

@@ -1,13 +1,14 @@
-import React, {PropTypes, Component} from 'react';
+import React, { Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOMServer from 'react-dom/server';
 const $ = require('jquery');
 const dt = require('datatables.net'); // eslint-disable-line no-unused-vars
 const buttons = require('datatables.net-buttons'); // eslint-disable-line no-unused-vars
 const responsive = require('datatables.net-responsive'); // eslint-disable-line no-unused-vars
 const responsiveBs = require('datatables.net-responsive'); // eslint-disable-line no-unused-vars
-const buttonStyles = require('datatables.net-buttons-dt/css/buttons.dataTables.css'); // eslint-disable-line no-unused-vars
-const defaultStyles = require('datatables.net-dt/css/jquery.dataTables.css'); // eslint-disable-line no-unused-vars
-const responsiveStyles = require('datatables.net-responsive-dt/css/responsive.dataTables.css'); // eslint-disable-line no-unused-vars
+// const buttonStyles = require('datatables.net-buttons-dt/css/buttons.dataTables.css'); // eslint-disable-line no-unused-vars
+// const defaultStyles = require('datatables.net-dt/css/jquery.dataTables.css'); // eslint-disable-line no-unused-vars
+// const responsiveStyles = require('datatables.net-responsive-dt/css/responsive.dataTables.css'); // eslint-disable-line no-unused-vars
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import _ from 'lodash';
@@ -42,8 +43,7 @@ let getCellClass =
 // This function accepts an integer, and produces a piece of HTML that shows it nicely with
 // some empty space at "thousand" markers.
 // Note, these space are not spaces, if you copy paste, they will not be visible.
-let valPrettyPrint = // eslint-disable-line no-unused-vars
-  (orgVal) => {
+let valPrettyPrint = (orgVal) => {
     // Save after-comma text, if present
     const period = orgVal.indexOf('.');
     const frac = period >= 0 ? orgVal.substr(period) : '';
@@ -76,7 +76,7 @@ let addThousandsCommas = (n) => { // eslint-disable-line no-unused-vars
     () => ({}),
   {pushState: push})
 
-export default class Table extends Component {
+export default class DataTable extends Component {
   static propTypes = {
     keys: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
