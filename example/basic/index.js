@@ -1,10 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-
-// var { DataTable } = require('react-data-components');
-// import { DataTable } from 'components';
-
-import DataTable from '../react-jquery-datatables/Table';
+import DataTable from 'react-jquery-datatables';
 var d3 = require('d3');
 
 const propTypes = {
@@ -114,22 +110,24 @@ class TableInstance extends Component {
     });
 
     if (tableData.length > 0) {
-
       return (
         <div>
           {this.buildTable(tableData, accountName)}
-          <CoveragePremiumModal
-            showModal={showCoveragePremiumModal}
-            close={this.closeCoveragePremiumModal}
-            onSubmit={this.handlePremiumSubmit}
-            submitting={submittingDetails} />
         </div>
+      )
     }
 
     return (
       <div>Loading csv data....</div>
     );
   }
+}
 
-  export default TableInstance;
+export default TableInstance;
+
+ReactDOM.render(
+  TableInstance,
+  document.getElementById('root')
+);
+
 

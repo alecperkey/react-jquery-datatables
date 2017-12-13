@@ -1,6 +1,6 @@
 {
   "name": "react-jquery-datatables",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "React, DataTables.net (aka jQuery DataTables), fork of https://github.com/carlosrocha/react-data-components",
   "keywords": [
     "datatables.net",
@@ -35,12 +35,22 @@
     "datatables.net-buttons-bs": "^1.2.1"
   },
   "dependencies": {
-    "lodash.some": "^3.2.3",
-    "lodash.sortby": "^3.1.5",
     "datatables.net": "^1.10.12",
     "datatables.net-bs": "^1.10.12",
     "datatables.net-buttons": "^1.2.1",
-    "datatables.net-buttons-bs": "^1.2.1"
+    "datatables.net-buttons-bs": "^1.2.1",
+    "datatables.net-buttons-dt": "^1.5.0",
+    "datatables.net-responsive": "^2.2.1",
+    "datatables.net-responsive-dt": "^2.2.1",
+    "jquery": "^2.2.4",
+    "lodash": "~4.17.4",
+    "lodash.some": "^3.2.3",
+    "lodash.sortby": "^3.1.5",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
+    "react-redux": "~4.4.5",
+    "react-router-redux": "~4.0.4",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel": "^5.8.21",

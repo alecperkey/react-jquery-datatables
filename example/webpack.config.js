@@ -4,7 +4,6 @@ module.exports = {
     contentBase: __dirname,
   },
   entry: {
-    flux: './flux/app',
     table: './table/main',
   },
   output: {
@@ -13,7 +12,7 @@ module.exports = {
   resolve: {
     alias: {
       // Use uncompiled version
-      'react-data-components': '../../src',
+      'react-jquery-datatables': '../../src',
     },
   },
   module: {
@@ -22,6 +21,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
       },
     ],
   },
