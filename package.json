@@ -1,6 +1,6 @@
 {
   "name": "react-jquery-datatables",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "React, DataTables.net (aka jQuery DataTables), fork of https://github.com/carlosrocha/react-data-components",
   "keywords": [
     "datatables.net",
