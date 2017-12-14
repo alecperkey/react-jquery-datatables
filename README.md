@@ -1,5 +1,9 @@
 ### Jquery DataTables (DataTables.net) with React
 
+#### From popular demand I have made this somewhat more understandable with a jsfiddle demo. https://jsfiddle.net/alecperkey/69z2wepo/94908/
+
+I don't know much about making NPM packages, so the minified bundle is ~500kb. Enabling DataTables.net plugins (various themes, buttons, pdfmaker, etc) as configuration options would be great, but I have other stuff to do for now. Hopefully someone will make pure react components with all the features DataTables.net provides
+
 *** Work in progress PRs encouraged ***
 [proof of concept](https://github.com/alecperkey/react-hot-boilerplate/blob/master/README.md)
 
@@ -9,7 +13,16 @@
 
 ### How it works: the React Lifecyle approach for jQuery DataTables
 
-see [Table.js](https://github.com/alecperkey/react-jquery-datatables/blob/master/src/Table.js)
+see [Table.js](https://github.com/alecperkey/react-jquery-datatables/blob/master/src/Table.js) if you want to understand the internals.
+
+Basically each column can have a unique renderer for full cell customization, and each row can have unique classNames. 
+Internally, Table.js uses ReactDOM.renderToStaticMarkup to make the table, and then jQuery.DataTable is a function which jQuerifies it. If any rows have classnames of `pushState` or `dtClickAction`, the cells in those rows will have handlers attached to them after the jQuerification of the table.
+
+`pushState` classed cells with anchor tags will have their default href anchor tag behavior prevented, and instead use `{push} from 'react-router-redux'` to navigate around (if you can use react-router-redux) without the whole page refreshing like a normal anchor tag would.
+
+`dtClickAction` allows more flexibility. 
+The DataTable accepts a prop `clickHandler`: if this is present, datatable will look for any rows with the
+class `.dtClickAction`.  If any of the cells has an anchor tag with `data-<foo>` attribute(s), and is clicked, then it will pass back to the clickHandler the values of such dataAttrs. Different cells might have different dataAttrs, and so the clickHandler in the [jsfiddle](https://jsfiddle.net/alecperkey/69z2wepo/94908/) shows a switch statement approach for handling multiple dtClickAction types.
 
 1. componentWillMount | get data from source & set it to the state variable with setState
 2. initial render | generate table markup using the props you provided
@@ -22,15 +35,6 @@ see [Table.js](https://github.com/alecperkey/react-jquery-datatables/blob/master
 6. Re-render is called, same as step 2
 7. componentDidUpdate, initialize the new table created in step 6, potentially with persisted DataTables-specific config from 5(a)
 8. componentWillUnmount, destroy table
-
-There are problems still associated with browser DOM manipulation (invariant violations, unable to find child n of element, etc)
-
-I'm looking into these resources to solve these: 
- - https://facebook.github.io/react/docs/working-with-the-browser.html
- - https://facebook.github.io/react/docs/more-about-refs.html
- - https://github.com/ryanflorence/react-training/blob/gh-pages/code/Dialog/Dialog.js
- - https://gist.github.com/petehunt/7882164
- - http://facebook.github.io/react/tips/use-react-with-other-libraries.html
 
 
 ###Warning
@@ -56,7 +60,7 @@ npm install react-jquery-datatables --save
 Styles (tbd)
 
 If you are using Webpack and the `css-loader` you can also require the css
-with `require('react-jquery-datatables/css/datatables.min.css')`.
+with `require('react-jquery-datatables/css/datatables.min.css')`. I'm  not sure how to include the styles in this package properly, as each user may prefer different styles and use different bundling methods.
 
 ### Using the default implementation
 
@@ -64,67 +68,3 @@ Forked from (React Data Components)[https://github.com/carlosrocha/react-data-co
 
 The default implementation includes a filter for case insensitive global search,
 pagination and page size.
-
-```javascript
-import React, {Component, PropTypes} from 'react';
-import { DataTable } from 'react-jquery-datatables';
-
-var columns = [
-  { title: 'Name', prop: 'name'  },
-  { title: 'City', prop: 'city' },
-  { title: 'Address', prop: 'address' },
-  { title: 'Phone', prop: 'phone' }
-];
-
-var data = [
-  { name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }
-  // It also supports arrays
-  // [ 'name value', 'city value', 'address value', 'phone value' ]
-];
-
-React.render((
-    <DataTable
-      className="container"
-      keys={[ 'name', 'address' ]}
-      columns={columns}
-      initialData={data}
-      initialPageLength={5}
-      initialSortBy={{ prop: 'city', order: 'descending' }}
-      pageLengthOptions={[ 5, 20, 50 ]}
-    />
-  ), document.body);
-```
-
-See [complete example tbd](#)
-
-## DataMixin options
-
-#### `keys: Array<string> | string`
-Properties that make each row unique, e.g. an id.
-
-#### `columns: Array<ColumnOption>`
-See `Table` column options.
-
-#### `initialData: Array<object | Array<any>>`
-
-#### `initialPageLength: number`
-
-#### `initialSortBy: { prop: string | number, order: string }`
-
-## Table column options
-
-#### `title: string`
-The title to display on the header.
-
-#### `prop: string | number`
-The name of the property or index on the data.
-
-#### `render: (val: any, row: any) => any`
-Function to render a different component.
-
-#### `className: string | (val: any, row: any) => string`
-Class name for the td.
-
-#### `defaultContent: string`
-
-#### `width: string | number`
