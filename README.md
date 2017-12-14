@@ -1,6 +1,6 @@
 ### Jquery DataTables (DataTables.net) with React
 
-#### From popular demand I have made this somewhat more understandable with a jsfiddle demo. https://jsfiddle.net/alecperkey/69z2wepo/94911/
+#### From popular demand I have made this somewhat more understandable with a jsfiddle demo. https://jsfiddle.net/alecperkey/69z2wepo/94913/
 
 I don't know much about making NPM packages, so the minified bundle is ~500kb. Enabling DataTables.net plugins (various themes, buttons, pdfmaker, etc) as configuration options would be great, but I have other stuff to do for now. Hopefully someone will make pure react components with all the features DataTables.net provides
 
@@ -22,7 +22,7 @@ Internally, Table.js uses ReactDOM.renderToStaticMarkup to make the table, and t
 
 `dtClickAction` allows more flexibility. 
 The DataTable accepts a prop `clickHandler`: if this is present, datatable will look for any rows with the
-class `.dtClickAction`.  If any of the cells has an anchor tag with `data-<foo>` attribute(s), and is clicked, then it will pass back to the clickHandler the values of such dataAttrs. Different cells might have different dataAttrs, and so the clickHandler in the [jsfiddle](https://jsfiddle.net/alecperkey/69z2wepo/94911/) shows a switch statement approach for handling multiple dtClickAction types.
+class `.dtClickAction`.  If any of the cells has an anchor tag with `data-<foo>` attribute(s), and is clicked, then it will pass back to the clickHandler the values of such dataAttrs. Different cells might have different dataAttrs, and so the clickHandler in the [jsfiddle](https://jsfiddle.net/alecperkey/69z2wepo/94913/) shows a switch statement approach for handling multiple dtClickAction types.
 
 1. componentWillMount | get data from source & set it to the state variable with setState
 2. initial render | generate table markup using the props you provided
